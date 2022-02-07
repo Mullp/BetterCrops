@@ -1,0 +1,19 @@
+# Whether quick harvest should be enabled (true) or disabled (false)
+quick-harvest: true
+# The crops quick harvest should work on
+quick-harvest-crops: # Available crops; (wheat, carrots, potatoes, beetroots, nether_wart, cocoa)
+  - wheat
+  - carrots
+  - potatoes
+  - beetroots
+  - nether_wart
+  - cocoa
+
+# Whether anti trample with feather falling boots should be enabled (true) or disabled (false)
+anti-trample: true
+# The percentages for not trampling crops by jumping on them
+anti-trample-percentages:
+  feather-falling-1: 25 # 25% chance for not trampling crops by jumping on them
+  feather-falling-2: 50
+  feather-falling-3: 75
+  feather-falling-4: 100

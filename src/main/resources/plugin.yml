@@ -1,0 +1,27 @@
+name: BetterCrops
+version: '${project.version}'
+api-version: 1.13
+main: me.mullp.bettercrops.BetterCrops
+authors: [ Mullp ]
+description: Small changes to the way crops work.
+
+commands:
+  bettercrops:
+    description: BetterCrops command.
+    usage: |
+      BetterCrops command syntax;
+      /bettercrops - Show command syntax.
+      /bettercrops reload - Reload the plugin configuration.
+
+permissions:
+  bettercrops.*:
+    description: Ability to use all BetterCrops commands.
+    children:
+      bettercrops.admin: true
+  bettercrops.admin:
+    description: Ability to use all BetterCrops commands.
+    children:
+      bettercrops.reload: true
+  bettercrops.reload:
+    default: op
+    description: Allows you to reload the configuration file.
