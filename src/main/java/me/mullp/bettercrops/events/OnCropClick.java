@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,8 +22,10 @@ public class OnCropClick implements Listener {
   private static final Set<Material> cropTypes = Set.of(Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOTS, Material.NETHER_WART, Material.COCOA);
   private static final Set<Material> seedTypes = Set.of(Material.WHEAT_SEEDS, Material.CARROT, Material.POTATO, Material.BEETROOT_SEEDS, Material.NETHER_WART, Material.COCOA_BEANS);
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.LOWEST)
   public void onCropClick(PlayerInteractEvent event) {
+    if (event.isCancelled()) return;
+
     if (plugin.getConfig().getBoolean("quick-harvest") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
       Block block = event.getClickedBlock();
       if (cropTypes.contains(block.getType())) {
