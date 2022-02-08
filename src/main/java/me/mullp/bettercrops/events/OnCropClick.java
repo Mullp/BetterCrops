@@ -1,6 +1,7 @@
 package me.mullp.bettercrops.events;
 
 import me.mullp.bettercrops.BetterCrops;
+import me.mullp.bettercrops.utils.RegionUtil;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
@@ -32,16 +33,9 @@ public class OnCropClick implements Listener {
     if (plugin.getConfig().getBoolean("quick-harvest") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
       Block block = event.getClickedBlock();
 
-      if (plugin.getServer().getPluginManager().isPluginEnabled("GriefPrevention")) {
-        // Hacky, stupid, irresponsible, overall just a weird methode to do this.
-        // Guess what, they wrote it themselves...
-        // https://github.com/TechFortress/GriefPrevention/blob/master/src/main/java/me/ryanhamshire/GriefPrevention/BlockEventHandler.java#L265
-        String noBuildReason = GriefPrevention.instance.allowBuild(event.getPlayer(), block.getLocation(), block.getType());
-        Bukkit.getLogger().info(noBuildReason);
-        if (noBuildReason != null) return;
-      }
-
       if (cropTypes.contains(block.getType())) {
+        if (!RegionUtil.canBuild(event.getPlayer(), block.getLocation())) return; // Check if player can build
+
         Set<Material> quickHarvestCrops = new HashSet<>();
         plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
           quickHarvestCrops.add(Material.getMaterial(material.toUpperCase()));
@@ -71,6 +65,8 @@ public class OnCropClick implements Listener {
 
             age.setAge(0); // Reset crop to fresh
             block.setBlockData(age);
+
+            event.setCancelled(true);
           }
         }
       }
