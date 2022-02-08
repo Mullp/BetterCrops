@@ -1,6 +1,8 @@
 package me.mullp.bettercrops.events;
 
 import me.mullp.bettercrops.BetterCrops;
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -28,6 +31,16 @@ public class OnCropClick implements Listener {
 
     if (plugin.getConfig().getBoolean("quick-harvest") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
       Block block = event.getClickedBlock();
+
+      if (plugin.getServer().getPluginManager().isPluginEnabled("GriefPrevention")) {
+        // Hacky, stupid, irresponsible, overall just a weird methode to do this.
+        // Guess what, they wrote it themselves...
+        // https://github.com/TechFortress/GriefPrevention/blob/master/src/main/java/me/ryanhamshire/GriefPrevention/BlockEventHandler.java#L265
+        String noBuildReason = GriefPrevention.instance.allowBuild(event.getPlayer(), block.getLocation(), block.getType());
+        Bukkit.getLogger().info(noBuildReason);
+        if (noBuildReason != null) return;
+      }
+
       if (cropTypes.contains(block.getType())) {
         Set<Material> quickHarvestCrops = new HashSet<>();
         plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
