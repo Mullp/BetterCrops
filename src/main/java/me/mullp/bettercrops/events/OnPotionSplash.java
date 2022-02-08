@@ -65,7 +65,6 @@ public class OnPotionSplash implements Listener {
         for (Location location : BlockUtil.generateSphere(hitLocation, Math.random() + 1.5 + amplifier, false)) {
           Block block = location.getBlock();
 
-          block.setType(Material.STONE);
           if (cropTypes.contains(block.getType())) {
             Ageable age = (Ageable) block.getBlockData();
             if (age.getAge() == 0) return;
