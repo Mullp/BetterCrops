@@ -26,46 +26,46 @@ public class OnCropClick implements Listener {
   public void onCropClick(PlayerInteractEvent event) {
     if (event.isCancelled()) return;
 
-    if (plugin.getConfig().getBoolean("quick-harvest") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
-      Block block = event.getClickedBlock();
+    if (!(plugin.getConfig().getBoolean("quick-harvest")
+            && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+            && event.getHand().equals(EquipmentSlot.HAND))) return;
 
-      if (cropTypes.contains(block.getType())) {
-        if (!RegionUtil.canBuild(event.getPlayer(), block.getLocation())) return; // Check if player can build
+    Block block = event.getClickedBlock();
 
-        Set<Material> quickHarvestCrops = new HashSet<>();
-        plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
-          quickHarvestCrops.add(Material.getMaterial(material.toUpperCase()));
-        });
+    if (!cropTypes.contains(block.getType())) return;
+    if (!RegionUtil.canBuild(event.getPlayer(), block.getLocation())) return; // Check if player can build
 
-        if (quickHarvestCrops.contains(block.getType())) { // Config contains clicked block
-          Ageable age = (Ageable) block.getBlockData();
-          if (age.getAge() == age.getMaximumAge()) {
+    Set<Material> quickHarvestCrops = new HashSet<>();
+    plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
+      quickHarvestCrops.add(Material.getMaterial(material.toUpperCase()));
+    });
 
-            List<ItemStack> drops = new ArrayList<>(block.getDrops(event.getPlayer().getInventory().getItemInMainHand()));
+    if (!quickHarvestCrops.contains(block.getType())) return;  // Config contains clicked block
 
-            int index = 0;
-            for (ItemStack drop : drops) {
-              if (seedTypes.contains(drop.getType())) {
-                drop.setAmount(drop.getAmount() - 1);
-                drops.set(index, drop);
-                break;
-              }
-              index++;
-            }
+    Ageable age = (Ageable) block.getBlockData();
+    if (age.getAge() != age.getMaximumAge()) return;
 
-            drops.forEach(drop -> {
-              if (drop.getAmount() > 0) {
-                block.getWorld().dropItemNaturally(block.getLocation(), drop);
-              }
-            });
+    List<ItemStack> drops = new ArrayList<>(block.getDrops(event.getPlayer().getInventory().getItemInMainHand()));
 
-            age.setAge(0); // Reset crop to fresh
-            block.setBlockData(age);
-
-            event.setCancelled(true);
-          }
-        }
+    int index = 0;
+    for (ItemStack drop : drops) {
+      if (seedTypes.contains(drop.getType())) {
+        drop.setAmount(drop.getAmount() - 1);
+        drops.set(index, drop);
+        break;
       }
+      index++;
     }
+
+    drops.forEach(drop -> {
+      if (drop.getAmount() > 0) {
+        block.getWorld().dropItemNaturally(block.getLocation(), drop);
+      }
+    });
+
+    age.setAge(0); // Reset crop to fresh
+    block.setBlockData(age);
+
+    event.setCancelled(true);
   }
 }

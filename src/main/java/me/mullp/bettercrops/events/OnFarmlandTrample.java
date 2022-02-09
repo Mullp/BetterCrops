@@ -20,20 +20,21 @@ public class OnFarmlandTrample implements Listener {
   public void onFarmlandTrample(PlayerInteractEvent event) {
     if (event.isCancelled()) return;
 
-    if (plugin.getConfig().getBoolean("anti-trample")) {
-    Player player = event.getPlayer();
-      Block block = event.getClickedBlock();
-      ItemStack boots = player.getInventory().getBoots();
-      if (block != null && block.getType().equals(Material.FARMLAND)
-              && event.getAction().equals(Action.PHYSICAL)
-              && boots != null
-              && boots.containsEnchantment(Enchantment.PROTECTION_FALL)) { // Farmland trampled with PROTECTION_FALL boots on
+    if (!plugin.getConfig().getBoolean("anti-trample")) return;
 
-        if (percentChance(plugin.getConfig().getDouble("anti-trample-percentages.feather-falling-" + boots.getEnchantmentLevel(Enchantment.PROTECTION_FALL)) / 100)) {
-          event.setCancelled(true);
-        }
+    Player player = event.getPlayer();
+    Block block = event.getClickedBlock();
+    ItemStack boots = player.getInventory().getBoots();
+    if (block != null && block.getType().equals(Material.FARMLAND)
+            && event.getAction().equals(Action.PHYSICAL)
+            && boots != null
+            && boots.containsEnchantment(Enchantment.PROTECTION_FALL)) { // Farmland trampled with PROTECTION_FALL boots on
+
+      if (percentChance(plugin.getConfig().getDouble("anti-trample-percentages.feather-falling-" + boots.getEnchantmentLevel(Enchantment.PROTECTION_FALL)) / 100)) {
+        event.setCancelled(true);
       }
     }
+
   }
 
   private static Boolean percentChance(double chance) {

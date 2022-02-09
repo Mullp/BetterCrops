@@ -2,7 +2,6 @@ package me.mullp.bettercrops.events;
 
 import me.mullp.bettercrops.utils.BlockUtil;
 import me.mullp.bettercrops.utils.RegionUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
