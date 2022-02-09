@@ -61,9 +61,7 @@ public class OnPotionSplash implements Listener {
     }
 
     Set<PotionEffectType> enabledPotions = new HashSet<>();
-    plugin.getConfig().getStringList("potions").forEach(potion -> {
-      enabledPotions.add(PotionEffectType.getByName(potion.toUpperCase()));
-    });
+    plugin.getConfig().getStringList("potions").forEach(potion -> enabledPotions.add(PotionEffectType.getByName(potion.toUpperCase())));
 
     Collection<PotionEffect> potionEffects = event.getPotion().getEffects();
     for (PotionEffect potionEffect : potionEffects) {
