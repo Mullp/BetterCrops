@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class RegionUtil {
-  private static Plugin plugin = BetterCrops.getPlugin(BetterCrops.class);
+  private static final Plugin plugin = BetterCrops.getPlugin(BetterCrops.class);
 
   public static boolean canBuild(final Player player, final Location location) {
     return griefPreventionCanBuild(player, location) && worldGuardCanBuild(player, location);
