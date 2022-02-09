@@ -36,9 +36,7 @@ public class OnCropClick implements Listener {
     if (!RegionUtil.canBuild(event.getPlayer(), block.getLocation())) return; // Check if player can build
 
     Set<Material> quickHarvestCrops = new HashSet<>();
-    plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
-      quickHarvestCrops.add(Material.getMaterial(material.toUpperCase()));
-    });
+    plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> quickHarvestCrops.add(Material.getMaterial(material.toUpperCase())));
 
     if (!quickHarvestCrops.contains(block.getType())) return;  // Config contains clicked block
 

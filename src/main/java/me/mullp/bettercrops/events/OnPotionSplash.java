@@ -3,7 +3,6 @@ package me.mullp.bettercrops.events;
 import me.mullp.bettercrops.BetterCrops;
 import me.mullp.bettercrops.utils.BlockUtil;
 import me.mullp.bettercrops.utils.RegionUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -85,7 +84,6 @@ public class OnPotionSplash implements Listener {
             block.setBlockData(age);
           }
         }
-
       } else if (potionEffect.getType().equals(PotionEffectType.HARM) && enabledPotions.contains(PotionEffectType.HARM)) {
         for (Location location : BlockUtil.generateSphere(hitLocation, radius, false)) {
           Block block = location.getBlock();
