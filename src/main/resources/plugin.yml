@@ -4,6 +4,7 @@ api-version: 1.13
 main: me.mullp.bettercrops.BetterCrops
 authors: [ Mullp ]
 description: Small changes to the way crops work.
+softdepend: [ GriefPrevention, WorldGuard ]
 
 commands:
   bettercrops:

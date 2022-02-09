@@ -1,11 +1,12 @@
 package me.mullp.bettercrops.events;
 
 import me.mullp.bettercrops.BetterCrops;
-import org.bukkit.Bukkit;
+import me.mullp.bettercrops.utils.RegionUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,11 +22,16 @@ public class OnCropClick implements Listener {
   private static final Set<Material> cropTypes = Set.of(Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOTS, Material.NETHER_WART, Material.COCOA);
   private static final Set<Material> seedTypes = Set.of(Material.WHEAT_SEEDS, Material.CARROT, Material.POTATO, Material.BEETROOT_SEEDS, Material.NETHER_WART, Material.COCOA_BEANS);
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.LOWEST)
   public void onCropClick(PlayerInteractEvent event) {
+    if (event.isCancelled()) return;
+
     if (plugin.getConfig().getBoolean("quick-harvest") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
       Block block = event.getClickedBlock();
+
       if (cropTypes.contains(block.getType())) {
+        if (!RegionUtil.canBuild(event.getPlayer(), block.getLocation())) return; // Check if player can build
+
         Set<Material> quickHarvestCrops = new HashSet<>();
         plugin.getConfig().getStringList("quick-harvest-crops").forEach(material -> {
           quickHarvestCrops.add(Material.getMaterial(material.toUpperCase()));
@@ -55,6 +61,8 @@ public class OnCropClick implements Listener {
 
             age.setAge(0); // Reset crop to fresh
             block.setBlockData(age);
+
+            event.setCancelled(true);
           }
         }
       }

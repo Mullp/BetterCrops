@@ -6,6 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,8 +16,10 @@ import org.bukkit.plugin.Plugin;
 public class OnFarmlandTrample implements Listener {
   Plugin plugin = BetterCrops.getPlugin(BetterCrops.class);
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.LOWEST)
   public void onFarmlandTrample(PlayerInteractEvent event) {
+    if (event.isCancelled()) return;
+
     if (plugin.getConfig().getBoolean("anti-trample")) {
     Player player = event.getPlayer();
       Block block = event.getClickedBlock();
