@@ -17,3 +17,9 @@ anti-trample-percentages:
   feather-falling-2: 50
   feather-falling-3: 75
   feather-falling-4: 100
+
+# Whether potions should affect crops, enabled (true) or disabled (false)
+potions-affect-crops: true
+potions:
+  - heal # Instant health will fully grow the crop
+  - harm # Instant damage will set the crop's age back to the start
