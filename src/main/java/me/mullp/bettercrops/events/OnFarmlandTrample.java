@@ -20,7 +20,12 @@ public class OnFarmlandTrample implements Listener {
   public void onFarmlandTrample(PlayerInteractEvent event) {
     if (event.isCancelled()) return;
 
-    if (!plugin.getConfig().getBoolean("anti-trample")) return;
+    if (plugin.getConfig().getBoolean("anti-trample")) {
+      event.setCancelled(true);
+      return;
+    }
+
+    if (!plugin.getConfig().getBoolean("anti-trample-feather-falling")) return;
 
     Player player = event.getPlayer();
     Block block = event.getClickedBlock();

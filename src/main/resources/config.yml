@@ -1,3 +1,15 @@
+#  ____       _   _             _____
+# |  _ \     | | | |           / ____|
+# | |_) | ___| |_| |_ ___ _ __| |     _ __ ___  _ __  ___
+# |  _ < / _ \ __| __/ _ \ '__| |    | '__/ _ \| '_ \/ __|
+# | |_) |  __/ |_| ||  __/ |  | |____| | | (_) | |_) \__ \
+# |____/ \___|\__|\__\___|_|   \_____|_|  \___/| .__/|___/
+#                                              | |
+#                                              |_|
+
+
+# CROPS
+# --------------------------------------
 # Whether quick harvest should be enabled (true) or disabled (false)
 quick-harvest: true
 # The crops quick harvest should work on
@@ -8,18 +20,32 @@ quick-harvest-crops: # Available crops; (wheat, carrots, potatoes, beetroots, ne
   - beetroots
   - nether_wart
   - cocoa
+# --------------------------------------
 
+
+# ANTI TRAMPLE
+# --------------------------------------
 # Whether anti trample with feather falling boots should be enabled (true) or disabled (false)
-anti-trample: true
+anti-trample-feather-falling: true
+# Whether the trampling of crops should totally be enabled (true) or disabled (false)
+anti-trample: false
 # The percentages for not trampling crops by jumping on them
 anti-trample-percentages:
   feather-falling-1: 25 # 25% chance for not trampling crops by jumping on them
   feather-falling-2: 50
   feather-falling-3: 75
   feather-falling-4: 100
+# --------------------------------------
 
+
+# POTIONS
+# --------------------------------------
 # Whether potions should affect crops, enabled (true) or disabled (false)
 potions-affect-crops: true
+# The amplifier of the radius potions should affect crops (max value: 10)
+potion-radius-amplifier: 3.5
+# The potions that are enabled
 potions:
   - heal # Instant health will fully grow the crop
   - harm # Instant damage will set the crop's age back to the start
+# --------------------------------------

@@ -66,7 +66,8 @@ public class OnPotionSplash implements Listener {
     Collection<PotionEffect> potionEffects = event.getPotion().getEffects();
     for (PotionEffect potionEffect : potionEffects) {
       int amplifier = potionEffect.getAmplifier();
-      double radius = Math.random() + 1.5 + (amplifier >= 6 ? 5 : amplifier);
+      double radiusAmplifier = plugin.getConfig().getDouble("potion-radius-amplifier") >= 11 ? 10 : plugin.getConfig().getDouble("potion-radius-amplifier");
+      double radius = Math.random() + radiusAmplifier + (amplifier >= 6 ? 5 : amplifier);
 
       if (potionEffect.getType().equals(PotionEffectType.HEAL) && enabledPotions.contains(PotionEffectType.HEAL)) {
         for (Location location : BlockUtil.generateSphere(hitLocation, radius, false)) {
