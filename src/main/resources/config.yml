@@ -29,9 +29,9 @@ quick-harvest-crops: # Available crops; (wheat, carrots, potatoes, beetroots, ne
 anti-trample-feather-falling: true
 # Whether the trampling of crops should totally be enabled (true) or disabled (false)
 anti-trample: false
-# The percentages for not trampling crops by jumping on them
+# The percentages for not trampling crops by jumping on them with feather falling boots
 anti-trample-percentages:
-  feather-falling-1: 25 # 25% chance for not trampling crops by jumping on them
+  feather-falling-1: 25 # 25% chance for not trampling crops by jumping on them with feather falling boots
   feather-falling-2: 50
   feather-falling-3: 75
   feather-falling-4: 100
@@ -45,7 +45,7 @@ potions-affect-crops: true
 # The amplifier of the radius potions should affect crops (max value: 10)
 potion-radius-amplifier: 3.5
 # The potions that are enabled
-potions:
+potions: # Available potions; (heal, harm)
   - heal # Instant health will fully grow the crop
   - harm # Instant damage will set the crop's age back to the start
 # --------------------------------------
