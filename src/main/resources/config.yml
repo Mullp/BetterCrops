@@ -27,7 +27,7 @@ quick-harvest-crops: # Available crops; (wheat, carrots, potatoes, beetroots, ne
 # --------------------------------------
 # Whether anti trample with feather falling boots should be enabled (true) or disabled (false)
 anti-trample-feather-falling: true
-# Whether the trampling of crops should totally be enabled (true) or disabled (false)
+# Whether the trampling of crops should, in general, be enabled (true) or disabled (false)
 anti-trample: false
 # The percentages for not trampling crops by jumping on them with feather falling boots
 anti-trample-percentages:
